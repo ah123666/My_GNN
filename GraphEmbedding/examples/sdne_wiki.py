@@ -1,11 +1,10 @@
 import sys
 sys.path.append('E:\\Repositories\\GNN\\GraphEmbedding')
-import numpy as np
 
+import numpy as np
 from ge.classify import read_node_label, Classifier
 from ge import SDNE
 from sklearn.linear_model import LogisticRegression
-
 import matplotlib.pyplot as plt
 import networkx as nx
 from sklearn.manifold import TSNE

@@ -107,9 +107,12 @@ class SDNE(object):
                 print('batch_size({0}) > node_size({1}),set batch_size = {1}'.format(
                     batch_size, self.node_size))
                 batch_size = self.node_size
+            # return self.model.fit([self.A.todense(), self.L.todense()], [self.A.todense(), self.L.todense()],
+            #                       batch_size=batch_size, epochs=epochs, initial_epoch=initial_epoch, verbose=verbose,
+            #                       shuffle=False, )
             return self.model.fit([self.A.todense(), self.L.todense()], [self.A.todense(), self.L.todense()],
                                   batch_size=batch_size, epochs=epochs, initial_epoch=initial_epoch, verbose=verbose,
-                                  shuffle=False, )
+                                  shuffle=True, )
         else:
             steps_per_epoch = (self.node_size - 1) // batch_size + 1
             hist = History()
