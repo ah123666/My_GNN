@@ -31,7 +31,9 @@ parser.add_argument('--dropout', type=float, default=0.5,
                     help='Dropout rate (1 - keep probability).')
 
 args = parser.parse_args()
-args.cuda = not args.no_cuda and torch.cuda.is_available()
+# args.cuda = not args.no_cuda and torch.cuda.is_available()
+args.cuda = False
+args.fastmode = True
 
 np.random.seed(args.seed)
 torch.manual_seed(args.seed)
@@ -75,14 +77,20 @@ def train(epoch):
         model.eval()
         output = model(features, adj)
 
-    loss_val = F.nll_loss(output[idx_val], labels[idx_val])
-    acc_val = accuracy(output[idx_val], labels[idx_val])
-    print('Epoch: {:04d}'.format(epoch+1),
-          'loss_train: {:.4f}'.format(loss_train.item()),
-          'acc_train: {:.4f}'.format(acc_train.item()),
-          'loss_val: {:.4f}'.format(loss_val.item()),
-          'acc_val: {:.4f}'.format(acc_val.item()),
-          'time: {:.4f}s'.format(time.time() - t))
+        loss_val = F.nll_loss(output[idx_val], labels[idx_val])
+        acc_val = accuracy(output[idx_val], labels[idx_val])
+        print('Epoch: {:04d}'.format(epoch+1),
+              'loss_train: {:.4f}'.format(loss_train.item()),
+              'acc_train: {:.4f}'.format(acc_train.item()),
+              'loss_val: {:.4f}'.format(loss_val.item()),
+              'acc_val: {:.4f}'.format(acc_val.item()),
+              'time: {:.4f}s'.format(time.time() - t))
+
+    else:
+        print('Epoch: {:04d}'.format(epoch+1),
+              'loss_train: {:.4f}'.format(loss_train.item()),
+              'acc_train: {:.4f}'.format(acc_train.item()),
+              'time: {:.4f}s'.format(time.time() - t))
 
 
 def test():
